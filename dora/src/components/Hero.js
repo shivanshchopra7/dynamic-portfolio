@@ -30,7 +30,7 @@ const Hero = () => {
 
             <p>
               {userData && userData.user.about.subTitle}
-              <p>{userData && userData.user.about.description}</p>
+            
             </p>
 
             <p>

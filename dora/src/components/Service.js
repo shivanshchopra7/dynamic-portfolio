@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
-import { doraSlider } from "../sliderProps";
 import { useState, useEffect, useRef } from 'react';
 import { getUserData } from 'pages/api/apiUtils';
 
@@ -31,25 +30,12 @@ const Service = () => {
     return userData.user.services.map((service, i) => (
       <SwiperSlide key={i} className="swiper-slide">
         <div className="service-item">
-
           <h4>{service.name}</h4>
           <p>{service.desc}</p>
           {service.charge && <p>Price: {service.charge}</p>}
         </div>
       </SwiperSlide>
     ));
-  };
-
-  const slideNext = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slideNext();
-    }
-  };
-
-  const slidePrev = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slidePrev();
-    }
   };
 
   return (
@@ -62,15 +48,24 @@ const Service = () => {
               <h2>I Provide Wide Range Of Digital Services</h2>
             </div>
             <div className="service-btn-container wow fadeInUp">
-              <button onClick={slidePrev} className="slider-arrow service-swiper-button-left">
+              <button className="slider-arrow service-swiper-button-left">
                 <img className="svg" src="images/icons/arrow-left.svg" alt="service left btn" />
               </button>
-              <button onClick={slideNext} className="slider-arrow active service-swiper-button-right">
+              <button className="slider-arrow active service-swiper-button-right">
                 <img className="svg" src="images/icons/arrow-right.svg" alt="service left btn" />
               </button>
             </div>
           </div>
-          <Swiper {...doraSlider.serviceSlider} className="swiper services-cont" ref={swiperRef}>
+          <Swiper
+            navigation={{
+              prevEl: '.service-swiper-button-left',
+              nextEl: '.service-swiper-button-right'
+            }}
+            slidesPerView={3} 
+            spaceBetween={30} 
+            className="swiper services-cont"
+            ref={swiperRef}
+          >
             {renderServices()}
           </Swiper>
         </div>

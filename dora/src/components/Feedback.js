@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { doraSlider } from "../sliderProps";
+import SwiperCore, { Navigation } from 'swiper';
+import 'swiper/swiper-bundle.min.css';
 import { getUserData } from 'pages/api/apiUtils';
+
+SwiperCore.use([Navigation]);
 
 const Feedback = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -53,9 +56,8 @@ const Feedback = () => {
           </div>
         </div>
         <Swiper
-          {...doraSlider.feedbackSlider}
           className="swiper feedback-items-cont"
-          navigation={{ prevEl: '.feedback-left', nextEl: '.feedback-right' }} // Add navigation controls
+          navigation={{ prevEl: '.feedback-left', nextEl: '.feedback-right' }} 
         >
           <div className="swiper-wrapper feedback-items wow fadeInUp">
             {testimonials.map((testimonial, index) => (
@@ -81,7 +83,6 @@ const Feedback = () => {
                     <div className="feedback-person-name">
                       <h4>{testimonial.name}</h4>
                       <p>{testimonial.position}</p>
-
                     </div>
                   </div>
                 </div>
