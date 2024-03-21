@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { UserContext } from 'pages/api/UserContext'; 
 import { getUserData } from 'pages/api/apiUtils';
 
 const Experience = () => {
+  const userData = useContext(UserContext); 
   const [skills, setSkills] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userId = '65b3a22c01d900e96c4219ae';
-        const userData = await getUserData(userId);
-        console.log('User Data:', userData);
-        if (userData && userData.user && userData.user.skills && userData.user.skills.length > 0) {
-          setSkills(userData.user.skills);
+        if (!userData) return;
+        const userId = userData.user._id; 
+        const userDataResponse = await getUserData(userId);
+        console.log('User Data:', userDataResponse);
+        if (userDataResponse && userDataResponse.user && userDataResponse.user.skills && userDataResponse.user.skills.length > 0) {
+          setSkills(userDataResponse.user.skills);
         } else {
           console.error('No skills found in user data');
         }
@@ -21,9 +24,7 @@ const Experience = () => {
     };
 
     fetchData();
-  }, []);
-
-
+  }, [userData]); 
 
   return (
     <section className="experience-section" id="about">

@@ -1,28 +1,13 @@
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useContext } from 'react';
+import { UserContext } from 'pages/api/UserContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
-import { useState, useEffect, useRef } from 'react';
-import { getUserData } from 'pages/api/apiUtils';
 
 SwiperCore.use([Navigation]);
 
 const Service = () => {
-  const [userData, setUserData] = useState(null);
-  const swiperRef = useRef(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userDataResponse = await getUserData('65b3a22c01d900e96c4219ae');
-        console.log("userData:", userDataResponse);
-        setUserData(userDataResponse);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const userData = useContext(UserContext);
 
   const renderServices = () => {
     if (!userData || !userData.user.services) return null;
@@ -64,7 +49,6 @@ const Service = () => {
             slidesPerView={3} 
             spaceBetween={30} 
             className="swiper services-cont"
-            ref={swiperRef}
           >
             {renderServices()}
           </Swiper>

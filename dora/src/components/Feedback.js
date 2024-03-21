@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UserContext } from 'pages/api/UserContext';
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from 'swiper';
 import 'swiper/swiper-bundle.min.css';
@@ -7,16 +8,18 @@ import { getUserData } from 'pages/api/apiUtils';
 SwiperCore.use([Navigation]);
 
 const Feedback = () => {
+  const userData = useContext(UserContext); 
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const userId = '65b3a22c01d900e96c4219ae';
-        const userData = await getUserData(userId);
-        console.log('User Data:', userData); // Log the entire userData object
-        if (userData && userData.user && userData.user.testimonials) {
-          setTestimonials(userData.user.testimonials);
+        if (!userData) return; 
+        const userId = userData.user._id; 
+        const userDataResponse = await getUserData(userId);
+        console.log('User Data:', userDataResponse);
+        if (userDataResponse && userDataResponse.user && userDataResponse.user.testimonials) {
+          setTestimonials(userDataResponse.user.testimonials);
         } else {
           console.error('No testimonials found in user data');
         }
@@ -26,7 +29,7 @@ const Feedback = () => {
     };
 
     fetchTestimonials();
-  }, []);
+  }, [userData]); 
 
   return (
     <section className="feedback-section">

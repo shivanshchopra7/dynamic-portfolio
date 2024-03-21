@@ -1,23 +1,8 @@
-import { useState, useEffect } from 'react';
-import { getUserData } from 'pages/api/apiUtils';
+import React, { useContext } from 'react';
+import { UserContext } from 'pages/api/UserContext'; 
 
 const Hero = () => {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userId = '65b3a22c01d900e96c4219ae'; 
-        const data = await getUserData(userId);
-        console.log('Received data:', data);
-        setUserData(data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUserData();
-  }, []);
+  const userData = useContext(UserContext); 
 
   return (
     <section className="hero-section" id="home">
@@ -30,11 +15,9 @@ const Hero = () => {
 
             <p>
               {userData && userData.user.about.subTitle}
-            
             </p>
 
             <p>
-             
               {userData &&
                 userData.user.social_handles.map((socialHandle) => (
                   <a

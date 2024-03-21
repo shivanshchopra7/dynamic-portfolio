@@ -19,10 +19,10 @@ const Contact = () => {
     } else {
       emailjs
         .send(
-          "service_seruhwu", // service id
-          "template_21aw58z", // template id
+          "service_seruhwu", 
+          "template_21aw58z",
           mailData,
-          "Q3pccdLZhU-mZT7tQ" // public api
+          "Q3pccdLZhU-mZT7tQ" 
         )
         .then(
           (response) => {
@@ -87,7 +87,7 @@ const Contact = () => {
             className="contact-form wow fadeInUp"
             onSubmit={(e) => onSubmit(e)}
           >
-            <h3>Let's message me and mack something together</h3>
+            <h3>Let's message me and make something together</h3>
 
             <input
               type="text"
@@ -108,10 +108,9 @@ const Contact = () => {
             <textarea
               className="input-control"
               placeholder="Message"
-              defaultValue={""}
+              value={message}
               name="message"
               onChange={(e) => onChange(e)}
-              value={message}
             />
             <div
               className={error ? "empty_notice" : "returnmessage"}
@@ -132,4 +131,5 @@ const Contact = () => {
     </section>
   );
 };
+
 export default Contact;

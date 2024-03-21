@@ -19,7 +19,9 @@ import PreLoader from "@/src/layout/PreLoader";
 import { dora } from "@/src/utils";
 import { useState, Fragment, useContext, useEffect } from "react";
 import { getUserData } from './api/apiUtils';
-
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { UserProvider } from 'pages/api/UserContext';
 const Index = () => {
   const [userData, setUserData] = useState(null);
 
@@ -52,6 +54,8 @@ const Index = () => {
   }, []);
   const { blog, portfolio_modal } = useContext(DoraContext);
   return (
+    <React.StrictMode>
+    <UserProvider>
     <Fragment>
       {blog && <BlogPopup />}
       {portfolio_modal && <PortfolioPopup />}
@@ -91,6 +95,8 @@ const Index = () => {
       {/* Cursor */}
       <Cursor />
     </Fragment>
+    </UserProvider>
+  </React.StrictMode>
   );
 };
 export default Index;
